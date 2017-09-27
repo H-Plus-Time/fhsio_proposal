@@ -1,0 +1,77 @@
+syntax = "proto3";
+
+package familygraph;
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/any.proto";
+
+message DateRange {
+  google.protobuf.Timestamp  start = 1;
+  google.protobuf.Timestamp  end = 2;
+}
+
+message Name {
+  string value = 1;
+  DateRange validity_period = 2;
+  string reference = 3;
+  // this could be anything - professional, nickname, maiden
+  string type = 4;
+}
+
+message Gender {
+  enum GClassification {
+    UNKNOWN = 0;
+    MALE = 1;
+    FEMALE = 2;
+  }
+  GClassification short_value = 1;
+  DateRange validity_period = 2;
+  string long_value = 3;
+}
+
+message Person {
+  string id = 1;
+  repeated Name name = 2;
+  Gender gender = 3;
+  google.protobuf.Timestamp born = 4;
+  string birthplace = 5;
+  google.protobuf.Timestamp died = 6;
+  map<string, google.protobuf.Any> properties = 9;
+}
+
+message Partnership {
+  string id = 1;
+  enum PType {
+    MARRIAGE = 0;
+    DEFACTO = 1;
+    OTHER = 2;
+  }
+  PType type = 2;
+  DateRange validity_period = 3;
+  string reference = 4;
+}
+
+// party to a partnership (i.e. Mary is party to Marriage X) edge
+message PartyTo {
+  string id = 1;
+  string person = 2;
+  string partnership = 3;
+}
+
+// parental relationship edge
+message ChildOf {
+  string id = 1;
+  enum RelType {
+    BIOLOGICAL = 0;
+    ADOPTED = 1;
+  }
+  RelType type = 2;
+  string parent = 3;
+  string child = 4;
+  DateRange validity_period = 5;
+}
+
+message Nodes {
+  repeated Person people = 1;
+  repeated Partnership partnerships = 2;
+}

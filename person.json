@@ -1,0 +1,18 @@
+{
+    "id": "uuid4",
+    "label": "person",
+    "properties": {
+        "name": [{
+            "value": "Mary Jane"
+        }],
+        "gender": [{
+            "value": "F"
+        }],
+        "birthplace": [{
+            "value": "Cork, Munster, Republic of Ireland"
+        }],
+        "born": [{
+            "value": "1967-08-11"
+        }]
+    }
+}
